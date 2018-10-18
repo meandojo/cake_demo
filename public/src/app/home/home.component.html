@@ -1,0 +1,55 @@
+<form>
+  <p>Name:
+    <input 
+      minlength="2"
+      maxlength="20"
+      required
+      name="newCake.name" 
+      [(ngModel)]="newCake.name"
+      #name="ngModel"
+    >
+    {{name.errors|json}}
+    {{name.valid|json}}
+  </p>
+  <p>Servings:
+    <input 
+      type="number"
+      min="1"
+      max="10"
+      required
+      name="newCake.servings" 
+      [(ngModel)]="newCake.servings"
+      #servings="ngModel"
+    >
+    {{servings.errors|json}}
+    {{servings.valid|json}}
+
+  </p>
+  <p>Baker Name:
+    <input 
+      minlength="3"
+      maxlength="24"
+      required
+      name="newCake.bakerName" 
+      [(ngModel)]="newCake.bakerName"
+      #bakerName="ngModel"
+    >
+    {{bakerName.errors|json}}
+    {{bakerName.valid|json}}
+
+  </p>
+  <p>Image URL:
+    <input name="newCake.imgUrl" [(ngModel)]="newCake.imgUrl">
+  </p>
+  <input *ngIf="bakerName.valid" type="submit" (click)="makeCake()">
+</form>
+
+
+
+<div *ngFor="let cake of allCakes">
+  <img style="width: 100px;" src={{cake.imgUrl}} (click)="selectCake(cake)">
+  <app-ratingform (emitter)="dataFromChild($event)"  [currentCake]="cake"></app-ratingform>
+  {{cake|json}}
+</div>
+
+<app-cake *ngIf="selectedCake" [CakeToShow]="selectedCake"></app-cake>
